@@ -1,11 +1,17 @@
 const express = require("express")
-const db = require("sqlite3").verbose
+const sqlite3 = require("sqlite3").verbose()
 const cors = require("cors")
 
 const app = express()
 const PORT = 3000
-app.use(cors())
+app.use(cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type"]
+}))
 app.use(express.json())
+
+const db = new sqlite3.Database("./database.db")
 
 db.run(`CREATE TABLE IF NOT EXISTS livros(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -28,18 +34,23 @@ app.post("/livros", async (req, res) => {
     let idioma = req.body.idioma
     let preco = req.body.preco
 
-    db.run(`INSERT INTO livros (titulo, autor, anoPublicao, genero, idioma, preco) VALUES (?, ?, ?, ?, ?, ?)`,
-        [titulo, autor, anoPublicao, genero, idioma, preco],
-        function(){
-            res.json({
-                id: this.lastID,
-                titulo,
-                autor,
-                anoPublicacao,
-                genero,
-                idioma,
-                preco
-            })
+    db.run(`INSERT INTO livros (titulo, autor, anoPublicacao, genero, idioma, preco) VALUES (?, ?, ?, ?, ?, ?)`,
+        [titulo, autor, anoPublicacao, genero, idioma, preco],
+        function(err){
+            if(err){
+                console.error(error);
+                res.status(500).json({error: "Erro ao cadastrar liro"});
+            }else{
+                res.json({
+                    id: this.lastID,
+                    titulo,
+                    autor,
+                    anoPublicacao,
+                    genero,
+                    idioma,
+                    preco
+                })
+            }
         }
 
     )
@@ -56,7 +67,7 @@ app.get("/livros", (req, res) => {
 app.get("/liros/:id", (req, res) => {
     let idLivro = req.params.id;
 
-    db.get(`SELECT id, titulo, autor, anoPublicao, genero, idioma, preco FROM livros
+    db.get(`SELECT id, titulo, autor, anoPublicacao, genero, idioma, preco FROM livros
         WHERE id = ?`,
     [idLivro], (err, result) => {
         if(result){
