@@ -24,6 +24,8 @@ db.run(`CREATE TABLE IF NOT EXISTS livros(
     )
 `)
 
+
+
 app.post("/livros", async (req, res) => {
     console.log(req.body);
 
@@ -39,7 +41,7 @@ app.post("/livros", async (req, res) => {
         function(err){
             if(err){
                 console.error(error);
-                res.status(500).json({error: "Erro ao cadastrar liro"});
+                res.status(500).json({error: "Erro ao cadastrar livro"});
             }else{
                 res.json({
                     id: this.lastID,
@@ -57,6 +59,7 @@ app.post("/livros", async (req, res) => {
 })
 
 
+
 app.get("/livros", (req, res) => {
     db.all(`SELECT id, titulo, autor, anoPublicacao, genero, idioma, preco FROM livros`, [], (err, rows) =>{
         res.json(rows)
@@ -64,7 +67,7 @@ app.get("/livros", (req, res) => {
 })
 
 
-app.get("/liros/:id", (req, res) => {
+app.get("/livros/:id", (req, res) => {
     let idLivro = req.params.id;
 
     db.get(`SELECT id, titulo, autor, anoPublicacao, genero, idioma, preco FROM livros
@@ -83,10 +86,10 @@ app.get("/liros/:id", (req, res) => {
 
 
 app.delete("/livros/:id", (req, res) => {
-    let idUsuario = req.params.id
+    let idLivro = req.params.id
 
     db.run(`DELETE FROM livros WHERE id = ?`, 
-    [idUsuario], function(){
+    [idLivro], function(){
 
         if(this.changes === 0){
             res.status(404).json({
@@ -102,8 +105,8 @@ app.delete("/livros/:id", (req, res) => {
 
 
 
-app.put("/usuarios/:id", async (req, res) => {
-    let idUsuario = req.params.id
+app.put("/livros/:id", async (req, res) => {
+    let idLivro = req.params.id
 
     let titulo = req.body.titulo
     let autor = req.body.autor
@@ -112,8 +115,7 @@ app.put("/usuarios/:id", async (req, res) => {
     let idioma = req.body.idioma
     let preco = req.body.preco
 
-    db.run(`UPDATE usuarios SET titulo = ?, autor = ?, anoPublicacao = ?, genero = ?, idioma = ?, preco = ? 
-        WHERE id = ?`, [titulo, autor, anoPublicacao, genero, idioma, preco],
+    db.run(`UPDATE livros SET titulo = ?, autor = ?, anoPublicacao = ?, genero = ?, idioma = ?, preco = ? WHERE id = ?`, [titulo, autor, anoPublicacao, genero, idioma, preco, idLivro],
         function(){
             res.json({
                 "message" : "Livro atualizado com sucesso"

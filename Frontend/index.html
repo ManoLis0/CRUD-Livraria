@@ -8,23 +8,27 @@
     <title>Cadastro</title>
 </head>
 <body>
-    <h2>
-        Cadastro de Livros
-    </h2>
+    <div class="container-principal">
 
-    <form>
-            <label for="titulo">Titulo <input type="text" id="titulo" name="titulo"></label>
-            <label for="autor">Autor <input type="text" id="autor" name="autor"></label>
-            <label for="ano-publicacao">Ano de Publicação<input type="text" id="ano-publicacao" name="ano-publicacao"></label>
-            <label for="genero">Gênero<input type="text" id="genero" name="genero"></label>
-            <label for="idioma">Idioma<input type="text" id="idioma" name="idioma"></label>
-            <label for="preco">Preço<input type="text" id="preco" name="preco"></label>
-            <button type="button" class="botao-cadastro" onclick="enviar()">Cadastrar</button>
-            <button type="button" class="botao-lista" onclick="irParaLista()">Ir para Lista de Livros</button>
-    </form>
+        <h2>Cadastro de Livros</h2>
+
+        <form id="formulario">
+                <label for="titulo">Título <input type="text" id="titulo" name="titulo"></label>
+                <label for="autor">Autor <input type="text" id="autor" name="autor"></label>
+                <label for="ano-publicacao">Ano de Publicação<input type="text" id="ano-publicacao" name="ano-publicacao"></label>
+                <label for="genero">Gênero<input type="text" id="genero" name="genero"></label>
+                <label for="idioma">Idioma<input type="text" id="idioma" name="idioma"></label>
+                <label for="preco">Preço<input type="text" id="preco" name="preco"></label>
+                <button type="button" class="botao-cadastro" onclick="enviar()">Cadastrar</button>
+                <button type="button" class="botao-lista" onclick="irParaLista()">Ir para Lista de Livros</button>
+        </form>
+
+    </div>
 
     <script>
             function enviar(){
+                const formulario = document.getElementById('formulario')
+
                 let inputTitulo = document.getElementById('titulo').value;
                 let inputAutor = document.getElementById('autor').value;
                 let inputAnoPublicacao = document.getElementById('ano-publicacao').value;
@@ -56,7 +60,7 @@
                 .then(function (data) {
                     alert(`Livro com ID ${data.id} cadastrado`)
                 })
-            
+                formulario.reset()
             }
 
             function irParaLista(){

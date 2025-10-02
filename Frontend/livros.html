@@ -32,7 +32,7 @@
 
     </table>
 
-    <button class="botao-adicionar" onclick="voltar()">Voltar</button>
+    <button class="botao-voltar" onclick="voltar()">Voltar</button>
 
 
 <script>
@@ -44,21 +44,21 @@
             const tbody = document.getElementById('tabela')
             tbody.innerHTML = ""
         
-            data.forEach(user => {
+            data.forEach(livro => {
                 const tr = document.createElement('tr')
                 
                 tr.innerHTML = `
-                <td>${user.id}</td>
-                <td>${user.titulo}</td>
-                <td>${user.autor}</td>
-                <td>${user.anoPublicacao}</td>
-                <td>${user.genero}</td>
-                <td>${user.idioma}</td>
-                <td>${user.preco}</td>
-                <td>
-                    <button class="botao-editar" onclick="editar (${user.id})">Editar</button>
-                    <button class="botao-excluir" onclick="excluir (${user.id})">Excluir</button>
-                    <button class="botao-mostrar" onclick="mostrar (${user.id})">Mostrar</button>
+                <td>${livro.id}</td>
+                <td>${livro.titulo}</td>
+                <td>${livro.autor}</td>
+                <td>${livro.anoPublicacao}</td>
+                <td>${livro.genero}</td>
+                <td>${livro.idioma}</td>
+                <td>${livro.preco}</td>
+                <td class="acoes">
+                    <button class="botao-editar" onclick="editarLivro (${livro.id})">Editar</button>
+                    <button class="botao-excluir" onclick="excluir (${livro.id})">Excluir</button>
+                    <button class="botao-mostrar" onclick="mostrar (${livro.id})">Mostrar</button>
                 </td>
                 `
 
@@ -80,7 +80,7 @@
         
     }
 
-    function editar(idLivro){
+    function editarLivro(id){
         let novoTitulo = prompt("Digite o novo título: ");
 
         if(!novoTitulo){
@@ -111,7 +111,7 @@
 
         let novoIdioma = prompt("Digite o novo idioma: ");
 
-        if(!novoAutor){
+        if(!novoIdioma){
             alert("Idioma não pode estar vazio!")
             return;
         }
@@ -123,18 +123,18 @@
             return;
         }
 
-
-
-
-        fetch(`http://localhost:3000/usuarios/${idUsuario}`, 
+        fetch(`http://localhost:3000/livros/${id}`, 
         {
             method : "PUT",
             headers: {"Content-type": "application/json"},
-                    body: JSON.stringify({
-                        nome: novoNome,
-                        email: novoEmail,
-                        senha: novaSenha
-                    })
+            body: JSON.stringify({
+                titulo: novoTitulo,
+                autor: novoAutor,
+                anoPublicacao: novoAnoPublicacao,
+                genero: novoGenero,
+                idioma: novoIdioma,
+                preco: novoPreco
+            })
         })
         .then(() => carregar())
     }
@@ -149,7 +149,7 @@
         .then(res => res.json())
         .then(livro => {
             alert(
-                `ID: ${livro.id}, Título: ${livro.titulo}, Autor: ${livro.autor}, Ano de Publicação: ${livro.anoPublicacao}, Gênero: ${livro.genero}, Idioma: ${livro.idioma}, Preço: ${preco}`
+                `ID: ${livro.id}\nTítulo: ${livro.titulo}\nAutor: ${livro.autor}\nAno de Publicação: ${livro.anoPublicacao}\nGênero: ${livro.genero}\nIdioma: ${livro.idioma}\nPreço: ${livro.preco}`
             )
         })
     }     

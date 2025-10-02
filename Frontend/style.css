@@ -1,15 +1,25 @@
 body{
-    margin: 20px;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+.container-principal{
+    border: 2px solid;
+    border-radius: 10px;
+    padding: 20px; 
+    width: 300px;
+    margin: 20px auto
 }
 
 h2{
     text-align: center;
+    margin: 0 0 20px 0;
 }
 
 form{
-    width: 300px;
-    margin: auto;
+    padding: 0;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 label{
@@ -24,10 +34,16 @@ input{
     box-sizing: border-box;
 }
 
-
-
-
-
+button{
+    font-size: 16px;
+    width: 100%;
+    padding: 2px;
+    margin-top: 10px;
+    color: black;
+    border-radius: 5px;
+    border: solid 1px gray;
+    cursor: pointer;
+}
 
 .botao-cadastro{
     background-color: rgb(84, 187, 92);
@@ -42,33 +58,14 @@ input{
     color: black;
 }
 
-
-
-
-
-.botao-lista-usuarios{
-    background-color: rgb(181, 208, 230);
-    color: white;
-    
+.botao-lista{
+    background-color: white;
 }
 
-.botao-lista-usuarios:hover{
-    background-color: rgb(157, 172, 184);;
+.botao-lista:hover{
+    background-color: rgb(228, 223, 223);
 }
 
-.botao-lista-usuarios:active{
-    color: rgb(0, 0, 0);
-}
-
-
-
-
-button{
-    width: 100%;
-    padding: 2px;
-    margin-top: 10px;
-    color: black;
-    border-radius: 5px;
-    border: solid 1px gray;
-    cursor: pointer;
+.botao-lista:active{
+    background-color: rgb(202, 202, 212);;
 }
