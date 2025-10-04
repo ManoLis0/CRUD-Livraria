@@ -2,159 +2,131 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Livros</title>
     <link rel="stylesheet" href="livros.css">
-    <title>Usuários</title>
 </head>
 <body>
+    <div class="container">
+        <h2>Lista de Livros</h2>
 
-    <h2>Lista de Livros</h2>
-    
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Ano</th>
+                    <th>Gênero</th>
+                    <th>Idioma</th>
+                    <th>Preço</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tabela"></tbody>
+        </table>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Título</th>
-                <th>Autor</th>
-                <th>Ano de Publicação</th>
-                <th>Gênero</th>
-                <th>Idioma</th>
-                <th>Preço</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
+        <button class="botao-voltar" onclick="voltar()">Voltar</button>
+    </div>
 
-        <tbody id="tabela">
-
-        </tbody>
-
-    </table>
-
-    <button class="botao-voltar" onclick="voltar()">Voltar</button>
-
-
-<script>
-    //
-    function carregar(){
-        fetch('http://localhost:3000/livros')
-        .then(res => res.json())
-        .then(data => {
-            const tbody = document.getElementById('tabela')
-            tbody.innerHTML = ""
-        
-            data.forEach(livro => {
-                const tr = document.createElement('tr')
-                
-                tr.innerHTML = `
-                <td>${livro.id}</td>
-                <td>${livro.titulo}</td>
-                <td>${livro.autor}</td>
-                <td>${livro.anoPublicacao}</td>
-                <td>${livro.genero}</td>
-                <td>${livro.idioma}</td>
-                <td>${livro.preco}</td>
-                <td class="acoes">
-                    <button class="botao-editar" onclick="editarLivro (${livro.id})">Editar</button>
-                    <button class="botao-excluir" onclick="excluir (${livro.id})">Excluir</button>
-                    <button class="botao-mostrar" onclick="mostrar (${livro.id})">Mostrar</button>
-                </td>
-                `
-
-                tbody.appendChild(tr)
-                
-                
-            });
-        })
-    }
-
-    function excluir(idLivro){
-        fetch(`http://localhost:3000/livros/${idLivro}`,
-        {
-            "method" : "DELETE"
-        })
-        .then(() => { 
-            carregar()
-        })
-        
-    }
-
-    function editarLivro(id){
-        let novoTitulo = prompt("Digite o novo título: ");
-
-        if(!novoTitulo){
-            alert("Título não pode estar vazio!")
-            return;
+    <script>
+        function carregar() {
+            fetch('http://localhost:3000/livros')
+                .then(res => res.json())
+                .then(data => {
+                    const tbody = document.getElementById('tabela');
+                    tbody.innerHTML = "";
+                    if (!data || data.length === 0) {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = '<td colspan="8">Nenhum livro cadastrado.</td>';
+                        tbody.appendChild(tr);
+                        return;
+                    }
+                    data.forEach(livro => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${livro.id}</td>
+                            <td>${livro.titulo}</td>
+                            <td>${livro.autor}</td>
+                            <td>${livro.anoPublicacao}</td>
+                            <td>${livro.genero}</td>
+                            <td>${livro.idioma}</td>
+                            <td>${livro.preco}</td>
+                            <td class="acoes">
+                                <button class="botao-editar" onclick="editarLivro(${livro.id})">Editar</button>
+                                <button class="botao-excluir" onclick="excluir(${livro.id})">Excluir</button>
+                                <button class="botao-mostrar" onclick="mostrar(${livro.id})">Ver</button>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                })
+                .catch(() => {
+                    const tbody = document.getElementById('tabela');
+                    tbody.innerHTML = "<tr><td colspan='8'>Erro ao carregar livros. Verifique a conexão com o servidor.</td></tr>";
+                });
         }
 
-        let novoAutor = prompt("Digite o novo autor: ");
-
-        if(!novoAutor){
-            alert("Autor não pode estar vazio!")
-            return;
+        function excluir(id) {
+            fetch(`http://localhost:3000/livros/${id}`, { method: "DELETE" })
+                .then(() => carregar());
         }
 
-        let novoAnoPublicacao = prompt("Digite o novo ano de publicação: ");
-        
-        if(!novoAnoPublicacao){
-            alert("Ano de Publiação não pode estar vazio!")
-            return;
-        }
+        function editarLivro(id) {
+            let novoTitulo = prompt("Novo título:");
+            if (!novoTitulo) return alert("Campo obrigatório.");
 
-        let novoGenero = prompt("Digite o novo gênero: ");
+            let novoAutor = prompt("Novo autor:");
+            if (!novoAutor) return alert("Campo obrigatório.");
 
-        if(!novoGenero){
-            alert("Gênero não pode estar vazio!")
-            return;
-        }
+            let novoAno = prompt("Novo ano:");
+            if (!novoAno) return alert("Campo obrigatório.");
 
-        let novoIdioma = prompt("Digite o novo idioma: ");
+            let novoGenero = prompt("Novo gênero:");
+            if (!novoGenero) return alert("Campo obrigatório.");
 
-        if(!novoIdioma){
-            alert("Idioma não pode estar vazio!")
-            return;
-        }
+            let novoIdioma = prompt("Novo idioma:");
+            if (!novoIdioma) return alert("Campo obrigatório.");
 
-        let novoPreco = prompt("Digite o novo preço");
+            let novoPreco = prompt("Novo preço:");
+            if (!novoPreco) return alert("Campo obrigatório.");
 
-        if(!novoPreco){
-            alert("Preço não pode estar vazio!")
-            return;
-        }
-
-        fetch(`http://localhost:3000/livros/${id}`, 
-        {
-            method : "PUT",
-            headers: {"Content-type": "application/json"},
-            body: JSON.stringify({
-                titulo: novoTitulo,
-                autor: novoAutor,
-                anoPublicacao: novoAnoPublicacao,
-                genero: novoGenero,
-                idioma: novoIdioma,
-                preco: novoPreco
+            fetch(`http://localhost:3000/livros/${id}`, {
+                method: "PUT",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    titulo: novoTitulo,
+                    autor: novoAutor,
+                    anoPublicacao: novoAno,
+                    genero: novoGenero,
+                    idioma: novoIdioma,
+                    preco: novoPreco
+                })
             })
-        })
-        .then(() => carregar())
-    }
+            .then(() => carregar());
+        }
 
+        function mostrar(id) {
+            fetch(`http://localhost:3000/livros/${id}`)
+                .then(res => res.json())
+                .then(livro => {
+                    alert(
+                        `Título: ${livro.titulo}\n` +
+                        `Autor: ${livro.autor}\n` +
+                        `Ano: ${livro.anoPublicacao}\n` +
+                        `Gênero: ${livro.genero}\n` +
+                        `Idioma: ${livro.idioma}\n` +
+                        `Preço: ${livro.preco}`
+                    );
+                });
+        }
 
-    function voltar(){
-        window.location.href = "index.html";
-    }
+        function voltar() {
+            // deveria redirecionar para index.html na mesma pasta, compatível com Live Server mas n funciona
+            window.location.assign("index.html");
+        }
 
-    function mostrar(id){
-        fetch(`http://localhost:3000/livros/${id}`)
-        .then(res => res.json())
-        .then(livro => {
-            alert(
-                `ID: ${livro.id}\nTítulo: ${livro.titulo}\nAutor: ${livro.autor}\nAno de Publicação: ${livro.anoPublicacao}\nGênero: ${livro.genero}\nIdioma: ${livro.idioma}\nPreço: ${livro.preco}`
-            )
-        })
-    }     
-    window.onload = carregar
-</script>
-
+        window.onload = carregar;
+    </script>
 </body>
 </html>

@@ -1,71 +1,120 @@
-body{
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.container-principal{
-    border: 2px solid;
+.container-principal {
+    max-width: 400px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px 30px 20px 30px;
     border-radius: 10px;
-    padding: 20px; 
-    width: 300px;
-    margin: 20px auto
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-h2{
-    text-align: center;
-    margin: 0 0 20px 0;
+#formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-form{
-    padding: 0;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+#formulario label {
+    font-weight: 500;
+    margin-bottom: 2px;
+    margin-top: 8px;
 }
 
-label{
-    display: block;
-    margin-top: 10px;
-}
-
-input{
-    width: 100%;
-    padding: 3px;
-    margin-top: 2px;
-    box-sizing: border-box;
-}
-
-button{
-    font-size: 16px;
-    width: 100%;
-    padding: 2px;
-    margin-top: 10px;
-    color: black;
+#formulario input[type="text"] {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    border: solid 1px gray;
-    cursor: pointer;
+    font-size: 15px;
+    margin-bottom: 2px;
 }
 
-.botao-cadastro{
-    background-color: rgb(84, 187, 92);
+.botao-cadastro, .botao-lista {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 0;
+    padding: 10px 0;
+    font-size: 16px;
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f6fa;
+    padding: 20px;
+    color: #2c3e50;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 12px 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #3498db;
+    color: white;
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    margin: 2px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.botao-editar {
+    background-color: #f1c40f;
+    color: #333;
+}
+
+.botao-excluir {
+    background-color: #e74c3c;
     color: white;
 }
 
-.botao-cadastro:hover{
-    background-color: rgb(79, 139, 84);;
+.botao-mostrar {
+    background-color: #3498db;
+    color: white;
 }
 
-.botao-cadastro:active{
-    color: black;
+.botao-voltar {
+    background-color: #ecf0f1;
+    color: #333;
+    display: block;
+    margin: auto;
+    padding: 10px 20px;
+    font-size: 15px;
 }
 
-.botao-lista{
-    background-color: white;
+button:hover {
+    opacity: 0.9;
 }
 
-.botao-lista:hover{
-    background-color: rgb(228, 223, 223);
-}
-
-.botao-lista:active{
-    background-color: rgb(202, 202, 212);;
+button:active {
+    transform: scale(0.98);
 }
